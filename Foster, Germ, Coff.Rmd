@@ -42,14 +42,25 @@ WA_Data %>%
 ```
 
 ```{r}
-#Creating Stratified Sample from ESD based on low-income
+#Slimming Dataframe and getting low-income percentage
 WA_Data2 <- WA_Data %>% 
   select(county, esd_name, district_name, school_name, all_students, ell, low_income, grade_level) %>%
-  filter(grade_level == "AllGrades", !is.na(esd_name)) %>% 
+  filter(grade_level == "AllGrades", !is.na(esd_name), school_name == 'District Total') %>% 
   mutate(low_income_percent = (low_income/all_students)*100) %>% 
   arrange(desc(low_income_percent))
+```
 
+```{r}
+##Get unique ESD Names
+unique(WA_Data2$esd_name)
+```
 
+```{r}
+#Stratified Sample 
+SS <- WA_Data2 %>% 
+  group_by(esd_name) %>% 
+  filter(low_income_percent > 50) %>% 
+  sample_n(2, replace = T)
 ```
 
 

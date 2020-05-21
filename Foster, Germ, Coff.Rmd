@@ -66,9 +66,12 @@ SS <- WA_Data2 %>%
 ```{r}
 #Simple Visualization 
 
-ggplot(SS, aes(reorder(district_name, +low_income_percent), low_income_percent, fill = esd_name)) + geom_col() + coord_flip() + labs(y= "Percentage of Low-Income Students", x= "School District", fill = "ESD Name") +     theme_calc() + scale_color_calc()
+ggplot(SS, aes(reorder(district_name, +low_income_percent), low_income_percent, fill = esd_name)) + geom_col() + coord_flip() + labs(y= "Percentage of Low-Income Students", x= "School District", fill = "ESD Name") +     theme_calc() 
 
 ```
 
+```{r}
+#Table of Sampled School Districts
+```
 
 

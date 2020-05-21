@@ -9,8 +9,7 @@ output: html_document
 library(tidyverse)
 library(readr)
 library(janitor)
-library(stringr)
-
+library(ggthemes)
 ```
 
 ```{r}
@@ -62,6 +61,13 @@ SS <- WA_Data2 %>%
   filter(low_income_percent > 50) %>% 
   sample_n(2, replace = T) %>% 
   arrange(esd_name)
+```
+
+```{r}
+#Simple Visualization 
+
+ggplot(SS, aes(reorder(district_name, +low_income_percent), low_income_percent, fill = esd_name)) + geom_col() + coord_flip() + labs(y= "Percentage of Low-Income Students", x= "School District", fill = "ESD Name") +     theme_calc() + scale_color_calc()
+
 ```
 
 

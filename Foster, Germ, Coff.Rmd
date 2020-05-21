@@ -9,7 +9,7 @@ output: html_document
 library(tidyverse)
 library(readr)
 library(janitor)
-library((stringr)
+library(stringr)
 
 ```
 
@@ -25,6 +25,8 @@ names(WA_Data)
 
 ```{r}
 WA_Data <- clean_names(WA_Data)
+WA_Data <- WA_Data %>% 
+  rename(ell = english_language_learners) ###Rename variable name
 ```
 
 ```{r}
@@ -38,4 +40,17 @@ WA_Data %>%
   group_by(esd_name) %>% 
   filter(esd_name %in%  c("Olympic Educational Service District 114", "Puget Sound Educational Service District 121", "Educational Service District 123", "North Central Educational Service District 171", "Northwest Educational Service District 189"), school_name == "District Total", grade_level == "AllGrades", all_students == max(all_students))
 ```
+
+```{r}
+#Creating Stratified Sample from ESD based on low-income
+WA_Data2 <- WA_Data %>% 
+  select(county, esd_name, district_name, school_name, all_students, ell, low_income, grade_level) %>%
+  filter(grade_level == "AllGrades", !is.na(esd_name)) %>% 
+  mutate(low_income_percent = (low_income/all_students)*100) %>% 
+  arrange(desc(low_income_percent))
+
+
+```
+
+
 

@@ -2,7 +2,10 @@
 title: "WA_Schl_Data"
 author: "Lamar Foster"
 date: "5/19/2020"
-output: html_document
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -10,13 +13,14 @@ library(tidyverse)
 library(readr)
 library(janitor)
 library(ggthemes)
+library(knitr)
 ```
 
 ```{r}
 download.file(url = "https://data.wa.gov/api/views/u4gd-6wxx/rows.csv?accessType=DOWNLOAD", destfile = "WA_Data.csv")
 ```
 
-```{r}
+```{r, include = F}
 WA_Data <-  read_csv("WA_Data.csv")
 glimpse(WA_Data)
 names(WA_Data)
@@ -72,6 +76,8 @@ ggplot(SS, aes(reorder(district_name, +low_income_percent), low_income_percent, 
 
 ```{r}
 #Table of Sampled School Districts
+
+kable(SS[1:18,c(2,3,5,9)])
 ```
 
 

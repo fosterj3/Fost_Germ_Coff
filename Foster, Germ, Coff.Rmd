@@ -1,0 +1,41 @@
+---
+title: "WA_Schl_Data"
+author: "Lamar Foster"
+date: "5/19/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(readr)
+library(janitor)
+library((stringr)
+
+```
+
+```{r}
+download.file(url = "https://data.wa.gov/api/views/u4gd-6wxx/rows.csv?accessType=DOWNLOAD", destfile = "WA_Data.csv")
+```
+
+```{r}
+WA_Data <-  read_csv("WA_Data.csv")
+glimpse(WA_Data)
+names(WA_Data)
+```
+
+```{r}
+WA_Data <- clean_names(WA_Data)
+```
+
+```{r}
+names(WA_Data)
+```
+
+```{r}
+#Max School District Enrollment for Certain ESDs
+WA_Data %>% 
+  select(c("esd_name", "school_name", "district_name", "school_year", "grade_level", "all_students")) %>% 
+  group_by(esd_name) %>% 
+  filter(esd_name %in%  c("Olympic Educational Service District 114", "Puget Sound Educational Service District 121", "Educational Service District 123", "North Central Educational Service District 171", "Northwest Educational Service District 189"), school_name == "District Total", grade_level == "AllGrades", all_students == max(all_students))
+```
+

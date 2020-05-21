@@ -45,7 +45,7 @@ WA_Data %>%
 #Slimming Dataframe and getting low-income percentage
 WA_Data2 <- WA_Data %>% 
   select(county, esd_name, district_name, school_name, all_students, ell, low_income, grade_level) %>%
-  filter(grade_level == "AllGrades", !is.na(esd_name), school_name == 'District Total') %>% 
+  filter(grade_level == "AllGrades", !is.na(esd_name), school_name == 'District Total', !esd_name %in%  c("Spokane Public Schools Charter Authorizer", "Washington State Charter School Commission"))%>% 
   mutate(low_income_percent = (low_income/all_students)*100) %>% 
   arrange(desc(low_income_percent))
 ```
@@ -60,7 +60,8 @@ unique(WA_Data2$esd_name)
 SS <- WA_Data2 %>% 
   group_by(esd_name) %>% 
   filter(low_income_percent > 50) %>% 
-  sample_n(2, replace = T)
+  sample_n(2, replace = T) %>% 
+  arrange(esd_name)
 ```
 
 
